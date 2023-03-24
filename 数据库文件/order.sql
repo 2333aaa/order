@@ -119,12 +119,31 @@ CREATE TABLE `Role_Action` (
 /*Table structure for table `Coupon` */
 CREATE TABLE `Coupon` (
   `coupon_id` int NOT NULL AUTO_INCREMENT,
-  `member_id` int default NULL,
+  `quota` int default NULL,
   `discount` float NOT NULL,
-  `order_id` int NOT NULL,
-  PRIMARY KEY (`coupon_id`),
+  `take_count` int NOT NULL,
+  `used_count` int NOT NULL,
+  PRIMARY KEY (`coupon_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+/*Table structure for table `Coupon_Member` */
+CREATE TABLE `Coupon_Member` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `member_id` int NOT NULL,
+  `coupon_id` int NOT NULL,
+  PRIMARY KEY (`id`),
   foreign key  (`member_id`) references `Member`(member_id),
-  foreign key  (`order_id`) references `Order`(order_id)
+  foreign key  (`coupon_id`) references `Coupon`(coupon_id)
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+
+/*Table structure for table `Coupon_Order` */
+CREATE TABLE `Coupon_Order` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `order_id` int NOT NULL,
+  `coupon_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  foreign key  (`order_id`) references `Order`(order_id),
+  foreign key  (`coupon_id`) references `Coupon`(coupon_id)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
